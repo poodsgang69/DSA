@@ -1,6 +1,10 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
 class Solution {
 public:
-    int lengthOfLastWordNaive(String s) {
+    int lengthOfLastWordNaive(string s) {
         int l = s.size();
         int count = 0;
 
@@ -36,6 +40,13 @@ public:
         return count;
     }
 };
+
+int main() {
+    Solution sol;
+    string s = "Hello World";
+    cout << sol.lengthOfLastWord(s) << endl;
+    return 0;
+}
 
 /*
 Link: https://leetcode.com/problems/length-of-last-word/?envType=study-plan-v2&envId=top-interview-150
