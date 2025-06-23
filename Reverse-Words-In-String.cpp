@@ -1,10 +1,31 @@
+/*
+Reverse-Words-In-String.cpp
+--------------------------
+This program demonstrates how to reverse the words in a string in-place using C++.
+It includes two approaches:
+  1. Solution: Cleans spaces, reverses the whole string, then reverses each word.
+  2. Solution2: Single-pass, in-place reversal and cleaning.
+
+Author: (Your Name)
+*/
+
 #include <iostream>
 #include <string>
 #include <algorithm>
 using namespace std;
 
+/**
+ * Class Solution
+ * Implements the approach of cleaning spaces, reversing the whole string,
+ * and then reversing each word to achieve the desired result.
+ */
 class Solution {
 public:
+    /**
+     * Reverses the words in a string in-place.
+     * @param s The input string.
+     * @return The string with words reversed and extra spaces removed.
+     */
     string reverseWords(string s) {
         // Step 1: Remove extra spaces and trim
         string cleaned = cleanSpaces(s);
@@ -19,7 +40,11 @@ public:
     }
     
 private:
-    // Helper function to clean extra spaces
+    /**
+     * Removes leading, trailing, and extra spaces between words.
+     * @param s The input string.
+     * @return A cleaned string with single spaces between words.
+     */
     string cleanSpaces(string s) {
         string result;
         int i = 0;
@@ -48,7 +73,10 @@ private:
         return result;
     }
     
-    // Helper function to reverse words in place
+    /**
+     * Reverses each word in the string in-place.
+     * @param s The string to process (by reference).
+     */
     void reverseWordsInPlace(string& s) {
         int start = 0;
         int end = 0;
@@ -69,9 +97,17 @@ private:
     }
 };
 
-// Alternative approach: Single pass solution
+/**
+ * Class Solution2
+ * Implements a single-pass, in-place approach to reverse words and clean spaces.
+ */
 class Solution2 {
 public:
+    /**
+     * Reverses the words in a string in-place (single pass).
+     * @param s The input string.
+     * @return The string with words reversed and extra spaces removed.
+     */
     string reverseWords(string s) {
         // Step 1: Reverse the entire string
         reverse(s.begin(), s.end());
