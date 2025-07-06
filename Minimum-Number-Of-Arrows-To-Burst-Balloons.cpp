@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int findMinArrowShots(vector<vector<int>>& points) {
+    int findMinArrowShotsBeginSort(vector<vector<int>>& points) {
         ios_base::sync_with_stdio(0);
         cin.tie(NULL);
         int i = 0 , j = i + 1 , ans = 0;
@@ -20,5 +20,20 @@ public:
         }
 
         return ans+1;
+    }
+
+    int findMinArrowShots(vector<vector<int>>& points) {
+        int ans = 1;
+        std::sort(points.begin(), points.end(), 
+              [](const std::vector<int>& a, const std::vector<int>& b) {
+                  return a[1] < b[1]; 
+              });
+        int arrowIdx = points[0][1];
+        for ( int i = 1 ; i < points.size() ; ++i ) {
+            if ( points[i][0] <= arrowIdx ) continue;
+            ans++;
+            arrowIdx = points[i][1];
+        }
+        return ans;
     }
 };
