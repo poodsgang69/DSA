@@ -1,21 +1,73 @@
 class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        ios_base::sync_with_stdio(0);
-        int l = 0, r = 0, size = s.size(), maxSize = 0;
-        std::unordered_map<char, int>map;
+    public int lengthOfLongestSubstring(String s) {
+        int left = 0, maxLen = 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for( int right = 0 ; right < s.length() ; ++right ) {
 
-        for (int r = 0 ; r < size ; r++ ) {
-            if(map[s[r]]>0) {
-                l = std::max(map[s[r]], l);
-            }
-            maxSize = std::max(maxSize, r - l + 1);
-            map[s[r]] = r+1;
+            if( map.containsKey( s.charAt(right)) ) left = Math.max(
+                map.get(s.charAt(right)), 
+                left
+            );
+
+            maxLen = Math.max(
+                maxLen, 
+                right - left + 1
+            );
+
+            map.put(s.charAt(right), right+1);
+
         }
-        return maxSize;
+        return maxLen;
     }
-};
+}
 
 /*
-  Explaination is written in the Diary. Basically we need to store the nextGoing Index at every point in the algo. This handles the duplicates. 
-*/
+----------------------------------------------------------
+INTUITION (FOR FUTURE ME)
+----------------------------------------------------------
+
+Goal:
+- Find the longest substring without repeating characters.
+
+Main Concept:
+- Use a SLIDING WINDOW defined by two pointers: LEFT and RIGHT.
+- Expand the window by moving RIGHT.
+- If we hit a repeated character, move LEFT forward to skip the duplicate.
+- Track max window length as we go.
+
+Why HashMap?
+- Stores each character’s **most recent index**:
+     key   -> character
+     value -> index + 1 (why +1 explained below)
+- Helps us quickly know **where the repeated char was last seen**.
+
+Core Logic:
+- For each character at `right` pointer:
+    1️⃣ If it's a repeat:
+         Move `left` to one position AFTER where this char was last seen.
+         BUT: never move `left` backward (use Math.max).
+    2️⃣ Update longest valid substring length:
+         (right - left + 1)
+    3️⃣ Update character’s latest index in map:
+         map.put(char, right+1)
+
+Why store index as "right + 1"?
+- This allows left pointer to directly jump to a **non-conflicting** position.
+- Avoids off-by-one errors when calculating substring length.
+
+Example (visual):
+     s = "abcabcbb"
+     left moves only forward → window always valid!
+
+Performance:
+- Each character processed once:
+    Time:  O(n)
+    Space: O(min(n, charset))   // usually 26/128/256
+
+Big Picture:
+✔ Expand window when unique
+✔ Shrink window when duplicate
+✔ Track max at every step
+
+Result:
+- Efficient sliding window strategy that never rechecks old characters.
